@@ -8,3 +8,9 @@ MedSegEvaluator is a modular Python library designed for comprehensive evaluatio
   - Dice, IoU, Hausdorff Distance (HD95), Average Surface Distance (ASD)
 - **Morphological Analysis**
   - Lesion volume, connected component (island) count, and 2D/3D area evaluation
+- **Visualization Tools**
+  - Contour overlays, histograms, and boxplots for metric distributions
+- **Robustness Assessment**
+  - Evaluate how segmentation quality changes under image perturbations or quality degradation
+
+
