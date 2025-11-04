@@ -13,4 +13,21 @@ MedSegEvaluator is a modular Python library designed for comprehensive evaluatio
 - **Robustness Assessment**
   - Evaluate how segmentation quality changes under image perturbations or quality degradation
 
+## Applications
+
+- Quantitative comparison of segmentation models (like UNet, nnUNet, DeepLab, etc.)
+- Robustness evaluation of models trained under noise, resolution, or intensity variations.
+- Exploratory analysis of segmentation consistency across lesion sizes and connectivity patterns.
+
+## Why MedSegEvaluator?
+
+While traditional tools stop at Dice or IoU, **MedSegEvaluator** goes beyond by incorporating:
+- Structural metrics (ASD, HD95)  
+- Morphological statistics (volume, island count)  
+- Image quality measures (SNR, entropy, blur)  
+
+This makes it ideal for **robustness studies**, **comparative model evaluation**, and **clinical reproducibility** research.
+
+
+
 
