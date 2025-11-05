@@ -12,6 +12,7 @@ setup(
         'pandas',
         'cv2',
         'matplotlib',
+        'seaborn',
         'scipy',
         'scikit-image',
         'nibabel',
