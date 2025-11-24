@@ -19,19 +19,6 @@ Install the package using pip::
 
     pip install medsegevaluator
 
-------------
-Quick Start
-------------
-
-Here is the simplest example to compute 3D Dice and slice-level Dice::
-
-    from medsegevaluator import dice3d, slice_level_dice
-
-    dice = dice3d(gt, pred)
-    slices, stats = slice_level_dice(gt, pred)
-
-    print("3D Dice:", dice)
-    print("Slice Stats:", stats)
 
 ------------
 Documentation Contents
@@ -45,6 +32,7 @@ Documentation Contents
    installation
    quickstart
    usage
+   perturbation
    evaluatation_pipeline
    robustness_metrics
    api_reference
