@@ -11,6 +11,6 @@ Or install from source:
 
 .. code-block:: bash
 
-    git clone https://github.com/darshan/MedSegEvaluator.git
+    git clone https://github.com/darshandathiya2/MedSegEvaluator.git
     cd MedSegEvaluator
     pip install -e .
