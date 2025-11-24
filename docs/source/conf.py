@@ -5,7 +5,8 @@ sys.path.insert(0, os.path.abspath('../..'))
 # -- Project information -----------------------------------------------------
 
 project = 'MedSegEvaluator'
-author = 'Darshan Dathiya'
+author = 'MegSegEvaluator Comunity'
+copyright = "2025, MedSegEvaluator community, http:github.com/darshandathiya2/MedSegEvaluator.git"
 version = '0.1.0'
 release = '0.1.0'
 
