@@ -1,0 +1,15 @@
+sphinx
+sphinx-rtd-theme
+sphinx-autodoc-typehints
+
+numpy
+pandas
+matplotlib
+seaborn
+scipy
+scikit-image
+nibabel
+pydicom
+
+tensorflow
+tensorflow-keras
