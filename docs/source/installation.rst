@@ -9,7 +9,7 @@ There are two ways to use MedSegEvaluator: 1. Install via pip 2. Install from so
     pip install medsegevaluator
 
 
-**install from source:**
+**Install from source:**
 
 .. code-block:: bash
 
