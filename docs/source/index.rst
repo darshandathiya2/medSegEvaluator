@@ -44,6 +44,7 @@ Documentation Contents
    getting_started
    installation
    quickstart
+   usage
    evaluatation_pipeline
    robustness_metrics
    api_reference
