@@ -12,6 +12,8 @@ MedSegEvaluator is a modular Python library designed for comprehensive evaluatio
   - Contour overlays, Bland-Altman Plot, histograms, and boxplots for metric distributions
 - **Robustness Assessment**
   - Evaluate how segmentation quality changes under image perturbations or quality degradation
+- **Global Robustness Metric**
+  - Quantify the model robustness under different perturbation  
 
 ## Applications
 
