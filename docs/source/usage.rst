@@ -32,10 +32,27 @@ To plot the Bland-Altman Plot:
 .. code-block:: python
 
     # Bland-Altman plot for GT volume and predicted volume
-     from bland_altman_plot import bland_altman_plot
+    from bland_altman_plot import bland_altman_plot
     
     gt_volume = np.array(df_results['GT_Volume'])
     inf_volume = np.array(df_results['INF_Volume'])
 
     bland_altman_plot(gt_volume, inf_volume, title="Bland-Altman Plot: Tumor Volume (mm³)",
         xlabel="Mean Volume", ylabel="Difference (Prediction - Ground Truth)", units='mm³')
+
+To compute the global robustness score under perturbation:
+
+.. code-block:: python
+    from medicalimageloader import MedicalImageLoader
+    from performance_metrics import global_robustness_score
+    # Create loader (normalize=True scales intensities to [0,1])
+    loader = MedicalImageLoader(normalize=True)
+
+    gt_image = loader.load_image(GROUND_TRUTH_DIR / 'mask_0001.png')
+    inf_image = loader.load_image(INFERENCE_DIR / 'pred_0001.png')
+
+    results = global_robustness_score(gt_image, inf_image, D_ref=50.0)
+    print(results['GRS'])
+
+
+    
