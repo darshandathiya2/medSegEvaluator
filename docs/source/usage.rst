@@ -7,3 +7,21 @@ Usage
 - The sample data is available in ``MedSegEvaluator/data``
 - Use jupyter notebook or google colab to run the 2D or 3D example, located in ``MedSegEvaluator/Examples``
 
+To visualize the image along with its ground truth and predicted output:
+
+.. code-block:: python
+
+    from perforamce_visualization import visualize_image_contour_3d
+
+    visualize_image_contour_3d(image, gt_image, inf_image, slice_index=57)
+
+To evaluate all performance metrics for the single ground truth and predicted output:
+
+.. code-block:: python
+
+    from performance_metrics import evaluate_all_metrics
+
+    results = evaluate_all_metrics(GT_img, inf_img, voxel_spacing=None)
+    for k, v in results.items():
+        print(f"{k}: {v:.4f}")
+
