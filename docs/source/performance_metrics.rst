@@ -27,3 +27,17 @@ The available segmentation metrics include:
 - Volume Similarity (VS)
 - Boundary F1 Score
 - Surface Dice
+
+Dice Similarity Coefficient
+---------------------------
+
+The Dice coefficient measures the overlap between ground truth and 
+predicted segmentation.
+
+Formula::
+
+    Dice = (2 * |A ∩ B|) / (|A| + |B|)
+
+Where:
+- ``A`` is the set of voxels in the ground truth mask.
+- ``B`` is the set of voxels in the predicted mask.
