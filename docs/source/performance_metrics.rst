@@ -54,8 +54,8 @@ respectively.
 
 Usage::
 
-    from medsegevaluator.metrics import accuracy
-    score = accuracy(gt, pred)
+    from performance_metrics import accuracy
+    acc = accuracy(gt, pred)
 
 
 Precision
