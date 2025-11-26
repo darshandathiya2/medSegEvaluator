@@ -60,3 +60,23 @@ Usage::
 
     from performance_metrics import dice_score
     score = dice_score(gt, pred)
+
+
+Precision
+----------
+
+A Precision is a proportion of all accurately predicted positive instances among all positive instances. It measures the model's ability.
+
+Formula:
+
+..math::
+
+   Precision = \frac{TP}{TP + FP}
+
+Where: ``TP`` and ``FP`` is  True Positives and False Negatives, respectively.
+
+Usage::
+
+   from performance_metrics import precision
+   pres = precision(gt, pred)
+
