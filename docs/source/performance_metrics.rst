@@ -1,9 +1,13 @@
 Performance Metrics
 ===================
 
-MedSegEvaluator provides a comprehensive suite of metrics for evaluating 
-medical image segmentation quality. These metrics cover region-level 
-overlap, boundary accuracy, surface distances, and volumetric agreement.
+MedSegEvaluator provides a wide range of metrics for evaluating the quality of 
+medical image segmentation. These metrics are grouped into four categories:
+
+- **Region-Level Overlap**
+- **Boundary Accuracy**
+- **Surface Distances**
+- **Volumetric Agreement**
 
 This page describes each metric, its mathematical formulation, and 
 how to compute it using MedSegEvaluator.
