@@ -8,10 +8,10 @@ and volumetric agreement.
 This section summarizes the four major categories of segmentation metrics
 available in MedSegEvaluator.
 
-- **Region-Level Overlap**  
+- **Region-Level Metrics**  
   Measures overlap quality between prediction and ground truth masks.
 
-- **Boundary Accuracy**  
+- **Boundary-Level Metrics**  
   Measures how well predicted boundaries align with the true anatomical contour.
 
 - **Surface Distances**  
@@ -29,10 +29,10 @@ Each category captures different aspects of segmentation performance.
 
 
 ====================================
-Region-Level Overlap
+Region-Level Metrics
 ====================================
 
-Metrics that quantify **overlap agreement** between the predicted and ground truth
+It quantifies the **overlap** between the predicted and ground truth
 masks.
 
 Accuracy
@@ -121,7 +121,7 @@ The Intersection over Union (IoU), also known as the Jaccard Index, measures the
 Formula:
 
 .. math::
-  \text{IoU} &= \frac{|A \cap B|}{|A \cup B|}
+  \text{IoU} = \frac{|A \cap B|}{|A \cup B|}
 
 Where :math:`A` is the set of voxels/pixels in the ground truth mask, :math:`B` is the set of voxels/pixels in the predicted mask.
 
@@ -130,3 +130,22 @@ Usage::
   from performance_metrics import intersection_over_union
   iou = intersection_over_union(gt, pred)
 
+
+====================================
+Boundary-level Metrics
+====================================
+
+Boundary-level metrics measure the accuracy of predicted contours against anatomical boundaries.
+
+Housedroff Distance (HD)
+-------------------
+
+The Hausdorff Distance (HD) measures the maximum boundary deviation between
+the predicted segmentation and the ground truth. It quantifies the worst-case
+error between surfaces.
+
+Formula:
+
+.. math::
+
+  \text{HD}(X, Y) = \max \left\{ \sup_{x \in X} \inf_{y \in Y} d(x, y),; \sup_{y \in Y} \inf_{x \in X} d(x, y) \right\}. 
