@@ -171,3 +171,18 @@ Usage::
 
   from performance_metrics import hd95
   HD95 = hd95(gt, pred)
+
+
+Average Symmetric Surface Distance (ASSD)
+-----------------------------------------
+
+The Average Symmetric Surface Distance (ASSD) is a metric used to measure the average distance between the boundaries of two segmentations, such as a machine-segmented region and a ground truth. It is calculated by finding the average of all distances from every point on the first surface to the closest point on the second surface, and then averaging this with the distances from every point on the second surface to the closest point on the first.
+
+Usage::
+
+  from performance_metrics import average_surface_distance
+  assd = average_surface_distance(gt, pred)
+  
+
+
+
