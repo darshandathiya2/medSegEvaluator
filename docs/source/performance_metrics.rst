@@ -69,7 +69,7 @@ A Precision is a proportion of all accurately predicted positive instances among
 
 Formula:
 
-..math::
+.. math::
 
    Precision = \frac{TP}{TP + FP}
 
