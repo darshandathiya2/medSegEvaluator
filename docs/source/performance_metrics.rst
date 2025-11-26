@@ -140,9 +140,7 @@ Boundary-level metrics measure the accuracy of predicted contours against anatom
 Housedroff Distance (HD)
 -------------------
 
-The Hausdorff Distance (HD) measures the maximum boundary deviation between
-the predicted segmentation and the ground truth. It quantifies the worst-case
-error between surfaces.
+The Hausdorff Distance (HD) measures the maximum boundary deviation between the predicted segmentation and the ground truth. 
 
 Formula:
 
