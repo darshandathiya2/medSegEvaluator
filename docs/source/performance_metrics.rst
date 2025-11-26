@@ -54,7 +54,7 @@ Formula:
     Dice = \frac{2 \cdot |A \cap B|}{|A| + |B|}
 
 Where: 
-``A`` is the set of voxels/pixels in the ground truth mask, ``B`` is the set of voxels/pixels in the predicted mask.
+$A$ is the set of voxels/pixels in the ground truth mask, $B$ is the set of voxels/pixels in the predicted mask.
 
 Usage::
 
