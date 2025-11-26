@@ -146,9 +146,23 @@ Formula:
 
 .. math::
 
-  \text{HD}(X, Y) = \max \left\{ \sup_{x \in X} \inf_{y \in Y} d(x, y),; \sup_{y \in Y} \inf_{x \in X} d(x, y) \right\}. 
+  \text{HD}(X, Y) = \max \left\{ \sup_{x \in X} \inf_{y \in Y} d(x, y), \sup_{y \in Y} \inf_{x \in X} d(x, y) \right\}. 
 
 Usage::
 
   from performance_metrics import hausdorff_distance
   HD = hausdorff_distance(gt, pred)
+
+
+95th Percentile Hausdorff Distance (HD95)
+-----------------------------------------
+
+The 95th Percentile Hausdorff Distance (HD95) is a robust version of the Hausdorff Distance. Instead of the maximum surface deviation, it computes the 95th percentile of all boundary distances.
+
+.. math::
+
+   HD95 = \max \left\{
+       \text{percentile}_{95}(D(A, B)),
+       \text{percentile}_{95}(D(B, A))
+   \right\}
+
