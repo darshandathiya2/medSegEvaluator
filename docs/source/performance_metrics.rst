@@ -40,3 +40,8 @@ Formula::
 
 Where: 
 ``A`` is the set of voxels in the ground truth mask, ``B`` is the set of voxels in the predicted mask.
+
+Usage::
+
+    from performance_metrics import dice_score
+    score = dice_score(gt, pred)
