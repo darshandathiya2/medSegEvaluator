@@ -14,12 +14,6 @@ Overview
 
 The available segmentation metrics include:
 
-.. contents::
-   
-   :local:
-   :depth: 2
-
-
 - **Region-Level Overlap**
 
    - Dice Similarity Coefficient
@@ -39,6 +33,15 @@ The available segmentation metrics include:
 - **Volumetric Agreement**
 
    - Volume Similarity (VS)
+
+
+.. contents::
+   
+   :local:
+   :depth: 2
+
+
+
 
 
 Dice Similarity Coefficient
