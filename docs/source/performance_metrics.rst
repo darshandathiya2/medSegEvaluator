@@ -35,6 +35,7 @@ The Dice coefficient measures the overlap between ground truth and
 predicted segmentation.
 
 Formula:
+
 .. math::
 
     Dice = \frac{2 \cdot |A \cap B|}{|A| + |B|}
