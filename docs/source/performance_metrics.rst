@@ -47,7 +47,7 @@ Formula:
 
 .. math::
 
-    Accuracy = \frac{TP + TN}{TP + TN + FP + FN}
+    \text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}
 
 Where :math:`TP`,:math:`TN`,  :math:`FP`, and :math:`FN` are True Positives, True Negatives, False Positives, and False Negatives  
 respectively.
@@ -67,7 +67,7 @@ Formula:
 
 .. math::
 
-   Precision = \frac{TP}{TP + FP}
+   \text{Precision} = \frac{TP}{TP + FP}
 
 Where :math:`TP` and :math:`FP` is  True Positives and False Negatives, respectively.
 
@@ -85,7 +85,7 @@ Formula:
 
 .. math::
 
-  Recall = \frac{TP}{TP + FN}
+  \text{Recall} = \frac{TP}{TP + FN}
 
 Where :math:`TP` and :math:`FN` is  True Positives and False Negatives, respectively.
 
@@ -97,14 +97,13 @@ Usage::
 Dice Similarity Coefficient
 ---------------------------
 
-The Dice coefficient measures the overlap between ground truth and 
-predicted segmentation.
+The Dice coefficient measures the overlap between the predicted segmentation and the ground truth.
 
 Formula:
 
 .. math::
 
-    Dice = \frac{2 \cdot |A \cap B|}{|A| + |B|}
+    \text{Dice} = \frac{2 \cdot |A \cap B|}{|A| + |B|}
 
 Where :math:`A` is the set of voxels/pixels in the ground truth mask, :math:`B` is the set of voxels/pixels in the predicted mask.
 
@@ -114,4 +113,20 @@ Usage::
     score = dice_score(gt, pred)
 
 
+Inetersection over Union (IOU)
+------------------------------
+
+The Intersection over Union (IoU), also known as the Jaccard Index, measures the ratio between the area of overlap and the area of union of the predicted segmentation and the ground truth.
+
+Formula:
+
+.. math::
+  \text{IoU} &= \frac{|A \cap B|}{|A \cup B|}
+
+Where :math:`A` is the set of voxels/pixels in the ground truth mask, :math:`B` is the set of voxels/pixels in the predicted mask.
+
+Usage::
+
+  from performance_metrics import intersection_over_union
+  iou = intersection_over_union(gt, pred)
 
