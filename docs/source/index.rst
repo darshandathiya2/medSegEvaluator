@@ -35,6 +35,7 @@ Documentation Contents
    perturbation
    evaluatation_pipeline
    robustness_metrics
+   performance_visualization
    api_reference
 
 -------------
