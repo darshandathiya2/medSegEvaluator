@@ -1,14 +1,21 @@
+from __future__ import annotations
+
 import numpy as np
 from scipy.ndimage import distance_transform_edt, binary_erosion
 from scipy.spatial.distance import directed_hausdorff
 
 
 class PerformanceMetrics:
-    """
-    Centralized class containing all region-based, surface-based,
-    volume-based and robustness-based segmentation metrics.
-
-    All methods are static because they do not depend on class state.
+    r"""
+    Class containing a comprehensive set of segmentation evaluation metrics.
+    
+    Metrics include:
+        1. Region-based: Dice, Jaccard, Precision, Recall, Specificity, Accuracy
+        2. Surface-based: Hausdorff Distance, HD95, Average Surface Distance
+        3. Volume-based: Volumetric Similarity, Relative Volume Difference, IoU
+        4. Robustness: Dice Drop, Global Robustness Score
+        5. Slice-level (3D): Slice-wise Dice and statistics
+        6. Utility: Concordance Correlation Coefficient (CCC)
     """
 
     # ------------------------------------------------------------- #
@@ -107,40 +114,8 @@ class PerformanceMetrics:
 
         return (dist1.mean() + dist2.mean()) / 2.0
 
-    @staticmethod
-    def nsd(y_true, y_pred, tolerance_mm=1.0, voxel_spacing=None):
-        y_true = y_true.astype(bool)
-        y_pred = y_pred.astype(bool)
-
-        if np.all(~y_true) and np.all(~y_pred):
-            return 1.0
-        if np.all(~y_true) or np.all(~y_pred):
-            return 0.0
-
-        if voxel_spacing is None:
-            voxel_spacing = [1.0] * y_true.ndim
-        elif np.isscalar(voxel_spacing):
-            voxel_spacing = [float(voxel_spacing)] * y_true.ndim
-
-        dt_true = distance_transform_edt(~y_true, sampling=tuple(voxel_spacing))
-        dt_pred = distance_transform_edt(~y_pred, sampling=tuple(voxel_spacing))
-
-        s_true = np.logical_and(y_true, ~binary_erosion(y_true))
-        s_pred = np.logical_and(y_pred, ~binary_erosion(y_pred))
-
-        d1 = dt_pred[s_true]
-        d2 = dt_true[s_pred]
-
-        if len(d1) == 0 or len(d2) == 0:
-            return 0.0
-
-        within = (d1 <= tolerance_mm).sum() + (d2 <= tolerance_mm).sum()
-        total = len(d1) + len(d2)
-
-        return within / (total + 1e-6)
-
     # ------------------------------------------------------------- #
-    # 3. VOLUME / OVERLAP METRICS
+    # 3. VOLUME-BASED METRICS
     # ------------------------------------------------------------- #
     @staticmethod
     def volumetric_similarity(y_true, y_pred):
@@ -162,33 +137,14 @@ class PerformanceMetrics:
     def intersection_over_union(y_true, y_pred):
         return PerformanceMetrics.jaccard_index(y_true, y_pred)
 
-    @staticmethod
-    def total_deviation_index(pred, gt, p=0.95):
-        e = np.abs(pred.flatten() - gt.flatten())
-        return np.percentile(e, p * 100)
-
-    @staticmethod
-    def concordance_correlation_coefficient(y_true, y_pred, epsilon=1e-8):
-        y_true = np.asarray(y_true).astype(np.float32).flatten()
-        y_pred = np.asarray(y_pred).astype(np.float32).flatten()
-        m1, m2 = y_true.mean(), y_pred.mean()
-        v1, v2 = y_true.var(), y_pred.var()
-        cov = np.mean((y_true - m1) * (y_pred - m2))
-        rho = cov / (np.sqrt(v1 * v2) + epsilon)
-        ccc = rho * (2 * np.sqrt(v1 * v2)) / (v1 + v2 + (m1 - m2)**2 + epsilon)
-        return np.clip(ccc, -1, 1), rho
-
     # ------------------------------------------------------------- #
-    # 4. DICE DROP (ROBUSTNESS)
+    # 4. ROBUSTNESS METRICS
     # ------------------------------------------------------------- #
     @staticmethod
     def dice_drop(original, perturbed, absolute=False):
         drop = original - perturbed
         return abs(drop) if absolute else drop
 
-    # ------------------------------------------------------------- #
-    # 5. GLOBAL ROBUSTNESS SCORE
-    # ------------------------------------------------------------- #
     @staticmethod
     def global_robustness_score(gt, pred, D_ref=10.0):
         dice = PerformanceMetrics.dice_score(gt, pred)
@@ -210,14 +166,13 @@ class PerformanceMetrics:
         }
 
     # ------------------------------------------------------------- #
-    # 6. SLICE-LEVEL METRICS (3D)
+    # 5. SLICE-LEVEL METRICS (3D)
     # ------------------------------------------------------------- #
     @staticmethod
     def slice_level_dice(gt3d, pred3d, slice_axis=0,
                          ignore_empty_slices=True,
                          empty_slice_value=1.0,
                          smooth=1e-6):
-
         if gt3d.shape != pred3d.shape:
             raise ValueError("gt3d and pred3d must have same shape")
 
@@ -286,6 +241,20 @@ class PerformanceMetrics:
         return dices, stats
 
     # ------------------------------------------------------------- #
+    # 6. UTILITY METRICS
+    # ------------------------------------------------------------- #
+    @staticmethod
+    def concordance_correlation_coefficient(y_true, y_pred, epsilon=1e-8):
+        y_true = np.asarray(y_true).astype(np.float32).flatten()
+        y_pred = np.asarray(y_pred).astype(np.float32).flatten()
+        m1, m2 = y_true.mean(), y_pred.mean()
+        v1, v2 = y_true.var(), y_pred.var()
+        cov = np.mean((y_true - m1) * (y_pred - m2))
+        rho = cov / (np.sqrt(v1 * v2) + epsilon)
+        ccc = rho * (2 * np.sqrt(v1 * v2)) / (v1 + v2 + (m1 - m2)**2 + epsilon)
+        return np.clip(ccc, -1, 1), rho
+
+    # ------------------------------------------------------------- #
     # 7. WRAPPER (ALL METRICS)
     # ------------------------------------------------------------- #
     @staticmethod
@@ -300,8 +269,8 @@ class PerformanceMetrics:
             "Hausdorff": PerformanceMetrics.hausdorff_distance(y_true, y_pred),
             "HD95": PerformanceMetrics.hd95(y_true, y_pred),
             "ASD": PerformanceMetrics.average_surface_distance(y_true, y_pred, voxel_spacing),
-            "NSD": PerformanceMetrics.nsd(y_true, y_pred, voxel_spacing=voxel_spacing),
             "Volumetric_Similarity": PerformanceMetrics.volumetric_similarity(y_true, y_pred),
             "Relative_Volume_Difference": PerformanceMetrics.relative_volume_difference(y_true, y_pred),
             "IoU": PerformanceMetrics.intersection_over_union(y_true, y_pred),
+            "CCC": PerformanceMetrics.concordance_correlation_coefficient(y_true, y_pred)[0]
         }
