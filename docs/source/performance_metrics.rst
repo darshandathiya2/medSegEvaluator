@@ -5,8 +5,11 @@ MedSegEvaluator provides a wide range of segmentation metrics grouped into
 four categories: region-level overlap, boundary accuracy, surface distances,
 and volumetric agreement.
 
-.. currentmodule:: MedSegEvaluator.medsegevaluator.PerformanceMetrics
-
+.. automodule:: medsegevaluator.PerformanceMetrics.py
+    :members:
+    :undoc-members:
+    :show-inheritance:
+    :member-order: bysource
 
 The :class:`PerformanceMetrics` class provides a unified collection of
 region-based, surface-based, volumetric, and robustness metrics commonly used
