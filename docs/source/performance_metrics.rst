@@ -8,7 +8,7 @@ and volumetric agreement.
 Class Modules
 --------------
 
-.. automodule:: PerformanceMetrics
+.. automodule:: medsegevaluator.PerformanceMetrics
     :members:
     :undoc-members:
     :show-inheritance:
