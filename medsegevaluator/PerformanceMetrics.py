@@ -1,30 +1,57 @@
+"""
+Performance Metrics Module
+==========================
+
+This module provides a comprehensive suite of evaluation metrics for
+medical image segmentation.
+
+It includes:
+
+1. **Region-based metrics:**  
+   Dice, Jaccard, Precision, Recall, Specificity, Accuracy  
+
+2. **Surface-based metrics:**  
+   Hausdorff Distance, HD95, Average Surface Distance  
+
+3. **Volume-based metrics:**  
+   Volumetric Similarity, Relative Volume Difference, IoU  
+
+4. **Robustness metrics:**  
+   Dice Drop, Global Robustness Score  
+
+5. **Slice-level metrics:**  
+   Slice-wise Dice and statistical summaries for 3D segmentation  
+
+6. **Utility metrics:**  
+   Concordance Correlation Coefficient (CCC)
+
+All functions are implemented as static methods inside the
+:class:`PerformanceMetrics` class and can be called without instantiation.
+
+This module-level description will appear correctly in Sphinx autodoc.
+"""
+
 from __future__ import annotations
 import numpy as np
 from scipy.ndimage import distance_transform_edt, binary_erosion
 from scipy.spatial.distance import directed_hausdorff
 
+
 class PerformanceMetrics:
     """
     Comprehensive segmentation evaluation class.
 
-    Metrics include:
-
-    1. **Region-based metrics:** Dice, Jaccard, Precision, Recall, Specificity, Accuracy  
-    2. **Surface-based metrics:** Hausdorff Distance, HD95, Average Surface Distance  
-    3. **Volume-based metrics:** Volumetric Similarity, Relative Volume Difference, IoU  
-    4. **Robustness metrics:** Dice Drop, Global Robustness Score  
-    5. **Slice-level metrics (3D):** Slice-wise Dice and statistics  
-    6. **Utility metrics:** Concordance Correlation Coefficient (CCC)  
+    Contains region-based, surface-based, volume-based, robustness,
+    slice-level, and utility metrics for evaluating medical image segmentations.
     """
 
     # ------------------------------
     # 1. REGION-BASED METRICS
     # ------------------------------
 
-    # [docs]
     @staticmethod
     def dice_score(y_true, y_pred):
-        """
+        r"""
         **Dice Coefficient**
 
         .. math::
@@ -37,10 +64,9 @@ class PerformanceMetrics:
         intersection = np.logical_and(y_true, y_pred).sum()
         return (2. * intersection) / (y_true.sum() + y_pred.sum() + 1e-6)
 
-    # [docs]
     @staticmethod
     def jaccard_index(y_true, y_pred):
-        """
+        r"""
         **Jaccard Index / IoU**
 
         .. math::
@@ -54,10 +80,9 @@ class PerformanceMetrics:
         union = np.logical_or(y_true, y_pred).sum()
         return intersection / (union + 1e-6)
 
-    # [docs]
     @staticmethod
     def precision(y_true, y_pred):
-        """
+        r"""
         **Precision**
 
         .. math::
@@ -69,10 +94,9 @@ class PerformanceMetrics:
         fp = np.logical_and(~y_true, y_pred).sum()
         return tp / (tp + fp + 1e-6)
 
-    # [docs]
     @staticmethod
     def recall(y_true, y_pred):
-        """
+        r"""
         **Recall / Sensitivity**
 
         .. math::
@@ -84,10 +108,9 @@ class PerformanceMetrics:
         fn = np.logical_and(y_true, ~y_pred).sum()
         return tp / (tp + fn + 1e-6)
 
-    # [docs]
     @staticmethod
     def specificity(y_true, y_pred):
-        """
+        r"""
         **Specificity**
 
         .. math::
@@ -99,10 +122,9 @@ class PerformanceMetrics:
         fp = np.logical_and(~y_true, y_pred).sum()
         return tn / (tn + fp + 1e-6)
 
-    # [docs]
     @staticmethod
     def accuracy(y_true, y_pred):
-        """
+        r"""
         **Accuracy**
 
         .. math::
@@ -119,14 +141,15 @@ class PerformanceMetrics:
     # 2. SURFACE-BASED METRICS
     # ------------------------------
 
-    # [docs]
     @staticmethod
     def hausdorff_distance(y_true, y_pred):
-        """
+        r"""
         **Hausdorff Distance (HD)**
 
         .. math::
             HD(A, B) = \max(h(A, B), h(B, A))
+
+        Returns the maximum surface distance between predictions and ground truth.
         """
         y_true = y_true.astype(bool)
         y_pred = y_pred.astype(bool)
@@ -138,11 +161,12 @@ class PerformanceMetrics:
         d2 = directed_hausdorff(p_pred, p_true)[0]
         return max(d1, d2)
 
-    # [docs]
     @staticmethod
     def hd95(y_true, y_pred):
-        """
+        r"""
         **95th Percentile Hausdorff Distance (HD95)**
+
+        More robust than Hausdorff Distance for noisy segmentation boundaries.
         """
         y_true = y_true.astype(bool)
         y_pred = y_pred.astype(bool)
@@ -154,11 +178,12 @@ class PerformanceMetrics:
         d2 = directed_hausdorff(p_pred, p_true)[0]
         return np.percentile([d1, d2], 95)
 
-    # [docs]
     @staticmethod
     def average_surface_distance(y_true, y_pred, voxel_spacing=None):
-        """
+        r"""
         **Average Surface Distance (ASD)**
+
+        Computes the average distance between the surfaces of two masks.
         """
         y_true = y_true.astype(bool)
         y_pred = y_pred.astype(bool)
@@ -180,11 +205,12 @@ class PerformanceMetrics:
     # 3. VOLUME-BASED METRICS
     # ------------------------------
 
-    # [docs]
     @staticmethod
     def volumetric_similarity(y_true, y_pred):
-        """
+        r"""
         **Volumetric Similarity (VS)**
+
+        Evaluates similarity of segmentation volumes.
         """
         y_true = y_true.astype(bool)
         y_pred = y_pred.astype(bool)
@@ -192,11 +218,12 @@ class PerformanceMetrics:
         v_pred = y_pred.sum()
         return 1 - abs(v_pred - v_true) / (v_pred + v_true + 1e-6)
 
-    # [docs]
     @staticmethod
     def relative_volume_difference(y_true, y_pred):
-        """
+        r"""
         **Relative Volume Difference (RVD)**
+
+        Measures percentage difference between predicted and true volume.
         """
         y_true = y_true.astype(bool)
         y_pred = y_pred.astype(bool)
@@ -204,13 +231,12 @@ class PerformanceMetrics:
         v_pred = y_pred.sum()
         return (v_pred - v_true) / (v_true + 1e-6)
 
-    # [docs]
     @staticmethod
     def intersection_over_union(y_true, y_pred):
-        """
+        r"""
         **Intersection over Union (IoU)**
 
-        Alias for Jaccard Index
+        Alias for Jaccard Index.
         """
         return PerformanceMetrics.jaccard_index(y_true, y_pred)
 
@@ -218,10 +244,9 @@ class PerformanceMetrics:
     # 4. ROBUSTNESS METRICS
     # ------------------------------
 
-    # [docs]
     @staticmethod
     def dice_drop(original, perturbed, absolute=False):
-        """
+        r"""
         **Dice Drop**
 
         Difference between original and perturbed Dice scores.
@@ -229,13 +254,12 @@ class PerformanceMetrics:
         drop = original - perturbed
         return abs(drop) if absolute else drop
 
-    # [docs]
     @staticmethod
     def global_robustness_score(gt, pred, D_ref=10.0):
-        """
+        r"""
         **Global Robustness Score (GRS)**
 
-        Combines Dice, HD95, and Concordance Correlation Coefficient.
+        Combines Dice, HD95, and CCC into a normalized robustness score.
         """
         dice = PerformanceMetrics.dice_score(gt, pred)
         hd = PerformanceMetrics.hd95(gt, pred)
@@ -256,19 +280,18 @@ class PerformanceMetrics:
         }
 
     # ------------------------------
-    # 5. SLICE-LEVEL METRICS (3D)
+    # 5. SLICE-LEVEL METRICS
     # ------------------------------
 
-    # [docs]
     @staticmethod
     def slice_level_dice(gt3d, pred3d, slice_axis=0,
                          ignore_empty_slices=True,
                          empty_slice_value=1.0,
                          smooth=1e-6):
-        """
+        r"""
         **Slice-wise Dice (3D)**
 
-        Computes Dice for each slice along a given axis.
+        Computes Dice score for each slice along a chosen axis.
         """
         if gt3d.shape != pred3d.shape:
             raise ValueError("gt3d and pred3d must have same shape")
@@ -341,13 +364,12 @@ class PerformanceMetrics:
     # 6. UTILITY METRICS
     # ------------------------------
 
-    # [docs]
     @staticmethod
     def concordance_correlation_coefficient(y_true, y_pred, epsilon=1e-8):
-        """
+        r"""
         **Concordance Correlation Coefficient (CCC)**
 
-        Measures agreement between predicted and ground truth masks.
+        Measures agreement between predicted and ground truth numerical values.
         """
         y_true = np.asarray(y_true).astype(np.float32).flatten()
         y_pred = np.asarray(y_pred).astype(np.float32).flatten()
@@ -357,4 +379,3 @@ class PerformanceMetrics:
         rho = cov / (np.sqrt(v1 * v2) + epsilon)
         ccc = rho * (2 * np.sqrt(v1 * v2)) / (v1 + v2 + (m1 - m2)**2 + epsilon)
         return np.clip(ccc, -1, 1), rho
-
