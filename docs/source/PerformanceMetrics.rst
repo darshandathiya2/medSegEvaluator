@@ -12,6 +12,8 @@ Class
     :undoc-members:
     :show-inheritance:
 
-Description
------------
+Performance Metric Class (:mod:`medsegevaluator.PerformanceMetrics`)
+--------------------------------------------------------------------
+
+
 
