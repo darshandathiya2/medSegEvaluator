@@ -1,8 +1,12 @@
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../..'))
+#sys.path.insert(0, os.path.abspath('../..'))
 
-# -- Project information -----------------------------------------------------
+
+basedir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, basedir)
+
+#-- Project information -----------------------------------------------------
 
 project = 'MedSegEvaluator'
 author = 'MegSegEvaluator Comunity'
