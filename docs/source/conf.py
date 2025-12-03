@@ -12,15 +12,20 @@ release = '0.1.0'
 
 # -- General configuration ---------------------------------------------------
 
-extensions = [
-    "sphinx.ext.autodoc",
-    "sphinx.ext.coverage",
-    "sphinx.ext.mathjax",
-    "sphinx.ext.viewcode",
-    "sphinx.ext.githubpages",
-    "sphinx.ext.napoleon",  # for NumPy/Google style docstrings
-    "sphinx_autodoc_typehints",
-]
+extensions = ['sphinx.ext.autodoc',
+              'sphinx.ext.autosummary',
+              'sphinx.ext.coverage',
+              'sphinx.ext.githubpages',
+              "sphinx.ext.mathjax",
+              'sphinx.ext.imgmath',
+              'sphinx.ext.todo',
+              'sphinx.ext.viewcode',
+              'sphinx.ext.napoleon',
+              'nbsphinx',
+              'sphinx_copybutton']
+
+napoleon_use_ivar = True
+
 
 autodoc_default_options = {
     'members': True,
