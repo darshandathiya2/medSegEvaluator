@@ -18,9 +18,10 @@ extensions = [
     "sphinx.ext.mathjax",
     "sphinx.ext.viewcode",
     "sphinx.ext.githubpages",
+    'sphinx.ext.autosummary',
 ]
 
-
+autosummary_generate = True
 
 autodoc_default_options = {
     'members': True,
@@ -30,13 +31,8 @@ autodoc_default_options = {
 }
 
 
-
-
 # A list of ignored prefixes for module index sorting.
 modindex_common_prefix = ["medsegevaluator."]
-
-
-autosummary_generate = True
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
