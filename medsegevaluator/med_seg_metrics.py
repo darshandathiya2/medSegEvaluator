@@ -38,11 +38,11 @@ class MedicalSegmentationMetrics:
     def iou(y_true: np.ndarray, y_pred: np.ndarray) -> float:
         """
         Compute Intersection over Union (IoU) between two binary segmentation masks.
-
+        
         .. math::
-           \text{IoU} = \frac{|A \cap B|}{|A \cup B|}
-
-          where :math:`A` denotes the predicted set of pixels and :math:`B` denotes the set of ground truth pixels.
+          \text{IoU} = \frac{|A \cap B|}{|A \cup B|}
+   
+        where :math:`A` denotes the predicted set of pixels and :math:`B` denotes the set of ground truth pixels.
 
         Parameters
         ----------
@@ -61,6 +61,7 @@ class MedicalSegmentationMetrics:
         intersection = np.sum(y_true_f * y_pred_f)
         union = np.sum(y_true_f) + np.sum(y_pred_f) - intersection
         return intersection / (union + 1e-8)
+
 
 
 
