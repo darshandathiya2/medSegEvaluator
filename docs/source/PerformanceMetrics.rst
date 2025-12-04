@@ -15,16 +15,3 @@ Class Reference
    :special-members: __init__
 
 
-Summary
--------
-
-.. autosummary::
-   :toctree: generated/
-   :recursive:
-   
-   PerformanceMetrics
-   PerformanceMetrics.__init__
-   PerformanceMetrics.dice_score
-   PerformanceMetrics.jaccard_index
-   PerformanceMetrics.hausdorff_distance
-   PerformanceMetrics.evaluate_all_metrics
