@@ -63,8 +63,3 @@ class MedicalSegmentationMetrics:
         return intersection / (union + 1e-8)
 
 
-
-
-
-
-
