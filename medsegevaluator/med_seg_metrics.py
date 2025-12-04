@@ -15,6 +15,7 @@ class MedicalSegmentationMetrics:
     def dice(y_true: np.ndarray, y_pred: np.ndarray) -> float:
         r"""
         Compute Dice score between two binary segmentation masks.
+        
         .. math::
           \text{Dice Coefficient} = \frac{2 \cdot |A \cap B|}{|A| + |B|}
 
@@ -60,6 +61,7 @@ class MedicalSegmentationMetrics:
         intersection = np.sum(y_true_f * y_pred_f)
         union = np.sum(y_true_f) + np.sum(y_pred_f) - intersection
         return intersection / (union + 1e-8)
+
 
 
 
