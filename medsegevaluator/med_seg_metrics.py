@@ -1,10 +1,3 @@
-"""
-MedicalSegmentationMetrics
-==========================
-
-Minimal segmentation metrics module containing only the Dice score.
-"""
-
 from __future__ import annotations
 import numpy as np
 
@@ -63,3 +56,4 @@ class MedicalSegmentationMetrics:
         intersection = np.sum(y_true_f * y_pred_f)
         union = np.sum(y_true_f) + np.sum(y_pred_f) - intersection
         return intersection / (union + 1e-8)
+
