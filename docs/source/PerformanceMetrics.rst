@@ -1,5 +1,5 @@
-Medical Image Segmentation Metrics
-============================
+Medical Image Segmentation Performance Metrics
+==============================================
 
 The ``PerformanceMetrics`` module provides a comprehensive collection of medical image segmentation evaluation metrics.
 
