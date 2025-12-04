@@ -1,9 +1,3 @@
-"""
-MedicalSegmentationMetrics
-==========================
-
-A comprehensive and Sphinx-friendly metrics module for medical image segmentation.
-"""
 
 from __future__ import annotations
 import numpy as np
@@ -216,3 +210,4 @@ class MedicalSegmentationMetrics:
                 "Boundary F1": MedicalSegmentationMetrics.boundary_f1(y_true, y_pred),
             })
         return results
+
