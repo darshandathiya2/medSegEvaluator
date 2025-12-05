@@ -62,6 +62,49 @@ class MedicalSegmentationMetrics:
         union = np.sum(y_true_f) + np.sum(y_pred_f) - intersection
         return intersection / (union + 1e-8)
 
+    @staticmethod
+    def accuracy(y_true: np.ndarray, y_pred: np.ndarray) -> float:
+        r"""
+        Compute classification accuracy between two binary segmentation masks.
+    
+        Accuracy measures the proportion of correctly classified pixels, including
+        both foreground and background.
+    
+        .. math::
+            \text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}
+    
+        where:
+        
+        - :math:`TP` = true positives  
+        - :math:`TN` = true negatives  
+        - :math:`FP` = false positives  
+        - :math:`FN` = false negatives  
+    
+        Although accuracy is intuitive, it may be misleading in highly imbalanced
+        medical images where the background dominates.
+    
+        Parameters
+        ----------
+        y_true : np.ndarray
+            Ground-truth binary mask.
+        y_pred : np.ndarray
+            Predicted binary mask.
+    
+        Returns
+        -------
+        float
+            Accuracy score ranging from 0 (completely incorrect) to 1 (perfect match).
+        """
+        y_true = y_true.astype(bool)
+        y_pred = y_pred.astype(bool)
+        tp = np.logical_and(y_true, y_pred).sum()
+        tn = np.logical_and(~y_true, ~y_pred).sum()
+        total = y_true.size
+        return (tp + tn) / (total + 1e-6)
+
+    
+
+
 
 
 
