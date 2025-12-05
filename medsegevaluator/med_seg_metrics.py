@@ -1,7 +1,5 @@
 from __future__ import annotations
 import numpy as np
-from scipy.spatial.distance import directed_hausdorff
-
 
 __all__ = ["MedicalSegmentationMetrics"]
 
@@ -180,6 +178,7 @@ class MedicalSegmentationMetrics:
 
 
     
+
 
 
 
