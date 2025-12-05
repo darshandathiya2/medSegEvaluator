@@ -147,7 +147,36 @@ class MedicalSegmentationMetrics:
         
         return tp / (tp + fn + 1e-6)
 
+    @staticmethod
+    def specificity(y_true: np.ndarray, y_pred: np.ndarray) -> float:
+        r"""Compute the Specificity score for binary segmentation masks.
     
+        Specificity measures how well the model identifies background pixels
+        correctly. It is defined as:
+    
+        .. math::
+            \\text{Specificity} = \\frac{TN}{TN + FP}
+    
+        where :math: `TN` (true negatives) are background pixels correctly predicted and :math: `FP` (false positives) are background pixels 
+        incorrectly predicted as foreground.
+    
+        Args:
+            y_true (np.ndarray): Ground-truth binary mask.
+            y_pred (np.ndarray): Predicted binary mask.
+    
+        Returns:
+            float: Specificity score ranging from 0 to 1. Higher values indicate
+            fewer false positives and better background classification.
+        """
+        y_true = y_true.astype(bool)
+        y_pred = y_pred.astype(bool)
+    
+        tn = np.logical_and(~y_true, ~y_pred).sum()
+        fp = np.logical_and(~y_true, y_pred).sum()
+    
+        return tn / (tn + fp + 1e-6)
+
+
 
 
 
