@@ -107,7 +107,7 @@ class MedicalSegmentationMetrics:
             y_pred (np.ndarray): Predicted binary segmentation mask.
     
         Returns:
-            float: Precision score in the range [0, 1].
+            float: Precision score in the range [0, 1], where higher values indicate fewer false positives.
         """
 
         y_true = y_true.astype(bool)
@@ -118,8 +118,37 @@ class MedicalSegmentationMetrics:
     
         return tp / (tp + fp + 1e-6)
 
+    
+    @staticmethod
+    def recall(y_true, y_pred):
+        """
+        Compute the Recall score for binary segmentation masks.
+    
+        Recall measures the proportion of ground-truth positive pixels that are
+        correctly detected by the model.
+    
+        .. math::
+            \text{Recall} = \frac{TP}{TP + FN}
+    
+        where :math:`TP` is the number of true positive pixels and :math:`FN` is the number of false negative pixels.
+    
+        Args:
+            y_true (np.ndarray): Ground-truth binary mask.
+            y_pred (np.ndarray): Predicted binary segmentation mask.
+            
+        Returns:
+            float: Recall score in the range [0, 1], where higher values indicate fewer false negatives.
+        """
+        
+        y_true = y_true.astype(bool)
+        y_pred = y_pred.astype(bool)
+        tp = np.logical_and(y_true, y_pred).sum()
+        fn = np.logical_and(y_true, ~y_pred).sum()
+        
+        return tp / (tp + fn + 1e-6)
 
     
+
 
 
 
