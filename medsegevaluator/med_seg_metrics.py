@@ -74,8 +74,8 @@ class MedicalSegmentationMetrics:
         where :math:`TP`, :math:`TN`, :math:`FP`, and :math:`FN` are  true positives, true negatives, false positives, and false negatives respectively. 
     
         Although accuracy is intuitive, it may be misleading in highly imbalanced medical images where the background dominates.
-    
-         Args:
+        
+        Args:
              y_true : np.ndarray
                     Ground-truth binary mask.
             y_pred : np.ndarray
@@ -122,6 +122,7 @@ class MedicalSegmentationMetrics:
 
 
     
+
 
 
 
